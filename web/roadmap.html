@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Build Your Own LLM - Roadmap</title>
+  <style>
+    :root { --bg:#070710; --text:#e0e0ff; --muted:#888; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; color: var(--text);
+      background: var(--bg);
+      font-family: 'Courier New', monospace;
+      background-image:
+        linear-gradient(rgba(0,255,178,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,178,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 20px; }
+    .header { text-align: center; padding: 60px 20px 30px; }
+    .tag {
+      display: inline-block; font-size: 11px; letter-spacing: 4px; color: #00FFB2;
+      border: 1px solid #00FFB230; padding: 6px 16px; margin-bottom: 20px; text-transform: uppercase;
+    }
+    h1 {
+      margin: 0 0 12px; line-height: 1;
+      font-size: clamp(32px, 6vw, 72px); font-weight: 900; letter-spacing: -2px; font-family: Georgia, serif;
+      background: linear-gradient(135deg, #fff 0%, #00FFB2 50%, #9B5DE5 100%);
+      background-clip: text;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .sub { color: var(--muted); font-size: 14px; letter-spacing: 2px; }
+    .timeline { display: flex; flex-direction: column; gap: 6px; }
+    .row { display: flex; gap: 12px; }
+    .left { width: 60px; display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+    .dot {
+      width: 44px; height: 44px; border-radius: 50%; border: 2px solid;
+      display:flex; align-items:center; justify-content:center; font-size:18px;
+      background:#070710;
+    }
+    .connector { width: 2px; height: 32px; opacity: 0.4; }
+    .card {
+      flex: 1; border: 1px solid #ffffff12; border-radius: 8px; padding: 16px 20px; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      transition: all .2s ease;
+    }
+    .card:hover { background: #ffffff08; }
+    .meta { font-size:10px; letter-spacing:3px; text-transform:uppercase; margin-bottom:2px; }
+    .title { font-size:18px; font-weight:700; color:#fff; font-family: Georgia, serif; }
+    .chips { display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; }
+    .chip { font-size:10px; padding:3px 8px; border-radius:20px; border:1px solid; white-space:nowrap; }
+    .arrow { font-size:18px; opacity:.6; transition: transform .3s; }
+    .detail {
+      margin-left: 72px; border-radius: 0 0 8px 8px; border-top: none;
+      padding: 20px 24px; margin-top:-2px; margin-bottom:8px;
+      animation: fadeIn .25s ease;
+    }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:20px; margin-bottom:20px; }
+    .topic-title { font-size:11px; letter-spacing:2px; text-transform:uppercase; font-weight:700; margin-bottom:10px; }
+    .topic-item { font-size:13px; color:#aaa; margin:0 0 6px; }
+    .milestone { border-radius:6px; padding:12px 16px; font-size:13px; color:#fff; font-style:italic; }
+    .bottom {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; margin-top:48px;
+    }
+    .panel { border:1px solid #ffffff15; border-radius:8px; padding:20px; }
+    .panel h3 { margin:0 0 14px; font-size:10px; letter-spacing:3px; font-weight:700; }
+    .kv { display:flex; justify-content:space-between; margin-bottom:8px; font-size:12px; gap:10px; }
+    .k { color:#666; }
+    .v { color:#ddd; text-align:right; }
+    .res { display:flex; gap:8px; margin-bottom:10px; align-items:center; }
+    .badge { font-size:9px; padding:2px 7px; border:1px solid #9B5DE550; color:#9B5DE5; border-radius:20px; }
+    .footer {
+      text-align:center; margin-top:40px; padding:20px; border-top:1px solid #ffffff10; color:#444; font-size:11px;
+      letter-spacing:1px;
+    }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="tag">Final Year Project → AI Startup</div>
+    <h1>Build Your Own LLM</h1>
+    <p class="sub">FROM SCRATCH · 7 PHASES · ~30 WEEKS</p>
+  </div>
+
+  <main class="wrap">
+    <section id="timeline" class="timeline"></section>
+
+    <section class="bottom">
+      <div class="panel" id="stack"></div>
+      <div class="panel" id="resources"></div>
+      <div class="panel" id="compute"></div>
+    </section>
+
+    <div class="footer">Click any phase to expand topics & milestones · Built for a Final Year Project that becomes a startup</div>
+  </main>
+
+  <script>
+    const phases = [
+      { id:1, title:"Phase 1", subtitle:"Mathematical Foundations", duration:"4–6 weeks", color:"#00FFB2", icon:"∑", topics:[
+        { name:"Linear Algebra Deep Dive", items:["Matrix operations, eigenvalues/eigenvectors", "SVD & PCA (used in attention mechanisms)", "Tensors & tensor contractions"] },
+        { name:"Probability & Statistics", items:["Bayesian inference", "Information theory: entropy, KL divergence, cross-entropy", "MLE & MAP estimation"] },
+        { name:"Calculus for Optimization", items:["Multivariable calculus & Jacobians", "Backpropagation from scratch (no frameworks)", "Numerical stability & gradient flow"] },
+      ], milestone:"Implement a neural net from scratch using only NumPy" },
+      { id:2, title:"Phase 2", subtitle:"NLP & Text Fundamentals", duration:"3–4 weeks", color:"#FF6B35", icon:"Aa", topics:[
+        { name:"Tokenization", items:["BPE (Byte Pair Encoding)", "WordPiece & SentencePiece", "Build your own tokenizer from scratch"] },
+        { name:"Word Representations", items:["Word2Vec, GloVe from scratch", "Positional encoding theory", "Subword embeddings"] },
+        { name:"Classical NLP", items:["N-grams & language models", "Seq2Seq & attention (pre-transformer)", "Beam search & decoding strategies"] },
+      ], milestone:"Build & train a BPE tokenizer on a custom corpus" },
+      { id:3, title:"Phase 3", subtitle:"Transformer Architecture", duration:"6–8 weeks", color:"#9B5DE5", icon:"⚡", topics:[
+        { name:"Attention Mechanism", items:["Scaled dot-product attention from scratch", "Multi-head attention (theory + code)", "Self-attention vs cross-attention"] },
+        { name:"Full Transformer Block", items:["Layer normalization (pre-norm vs post-norm)", "FFN layers with GELU/SwiGLU activation", "Residual connections & gradient highways"] },
+        { name:"GPT-style Decoder", items:["Causal masking for autoregressive LMs", "KV cache implementation", "Rotary positional embeddings (RoPE)"] },
+      ], milestone:"Build GPT-2 (small) from scratch in PyTorch — train on tiny Shakespeare" },
+      { id:4, title:"Phase 4", subtitle:"Training at Scale", duration:"6–8 weeks", color:"#F72585", icon:"🔥", topics:[
+        { name:"Data Pipeline", items:["Dataset curation & cleaning (C4, OpenWebText)", "Data deduplication strategies", "Tokenization pipeline at scale"] },
+        { name:"Optimization", items:["AdamW, gradient clipping, learning rate schedules", "Mixed precision training (FP16/BF16)", "Gradient accumulation & checkpointing"] },
+        { name:"Distributed Training", items:["Data parallelism with DDP", "Model parallelism basics", "Efficient training with HuggingFace Accelerate"] },
+      ], milestone:"Train a 125M parameter model on cloud GPU (Lambda Labs / Vast.ai)" },
+      { id:5, title:"Phase 5", subtitle:"Alignment & Fine-tuning", duration:"4–5 weeks", color:"#00B4D8", icon:"🎯", topics:[
+        { name:"Supervised Fine-tuning", items:["Instruction tuning datasets (Alpaca, FLAN)", "LoRA & QLoRA (parameter efficient fine-tuning)", "Chat format & conversation templates"] },
+        { name:"RLHF Pipeline", items:["Reward model training from human preferences", "PPO algorithm for LLMs", "DPO (Direct Preference Optimization) — simpler RLHF"] },
+        { name:"Evaluation", items:["Perplexity, BLEU, ROUGE metrics", "BenchMarks: HellaSwag, ARC, TruthfulQA", "Build your own eval harness"] },
+      ], milestone:"Fine-tune your model to follow instructions on a custom task" },
+      { id:6, title:"Phase 6", subtitle:"Inference & Deployment", duration:"3–4 weeks", color:"#FFD60A", icon:"🚀", topics:[
+        { name:"Inference Optimization", items:["Quantization: INT8, GPTQ, AWQ", "KV-cache optimization", "Speculative decoding & Flash Attention"] },
+        { name:"Serving", items:["Build REST API with FastAPI", "vLLM / llama.cpp for efficient serving", "Streaming responses (SSE)"] },
+        { name:"Product Layer", items:["RAG (Retrieval Augmented Generation)", "Tool use & function calling", "System prompt design & guardrails"] },
+      ], milestone:"Deploy your model as a public API / chatbot demo" },
+      { id:7, title:"Phase 7", subtitle:"Startup & Differentiation", duration:"Ongoing", color:"#FB5607", icon:"💡", topics:[
+        { name:"Niche Down", items:["Pick a domain: legal, medical, coding, regional language", "Build domain-specific datasets", "Benchmark vs GPT-4 on your niche"] },
+        { name:"Moat Building", items:["Proprietary data partnerships", "Custom fine-tuning pipeline as a service", "On-premise / privacy-first positioning"] },
+        { name:"Go-to-Market", items:["Open source the base model (build community)", "Monetize via API / enterprise fine-tuning", "YC / startup grants: apply with demo"] },
+      ], milestone:"Launch v0.1 publicly — get first 100 users" },
+    ];
+
+    const resourceLinks = [
+      { name:"Karpathy's makemore / nanoGPT", cat:"Code" },
+      { name:"\"Attention Is All You Need\" paper", cat:"Paper" },
+      { name:"Hugging Face Course", cat:"Course" },
+      { name:"LLM.int8() quantization paper", cat:"Paper" },
+      { name:"The Pile dataset", cat:"Data" },
+      { name:"Stanford CS224N NLP course", cat:"Course" },
+    ];
+
+    const stackData = [
+      ["Language", "Python 3.11+"],
+      ["Framework", "PyTorch (from scratch first)"],
+      ["Training", "CUDA / HuggingFace Accelerate"],
+      ["Tokenizer", "SentencePiece / tiktoken"],
+      ["Serving", "FastAPI + vLLM"],
+      ["Experiment tracking", "Weights & Biases"],
+    ];
+
+    const computeData = [
+      ["Prototyping", "Google Colab (Free T4)"],
+      ["Development", "Kaggle 30hr/week GPU"],
+      ["Training runs", "Vast.ai / Lambda Labs (~$50–200)"],
+      ["Model size target", "125M → 1B params"],
+      ["Dataset size", "~10–50GB text"],
+      ["Timeline", "8–10 months total"],
+    ];
+
+    let activeId = null;
+
+    const timeline = document.getElementById('timeline');
+
+    function renderTimeline() {
+      timeline.innerHTML = '';
+      phases.forEach((phase, index) => {
+        const isActive = activeId === phase.id;
+
+        const rowWrap = document.createElement('div');
+
+        const row = document.createElement('div');
+        row.className = 'row';
+
+        const left = document.createElement('div');
+        left.className = 'left';
+
+        const dot = document.createElement('div');
+        dot.className = 'dot';
+        dot.style.borderColor = phase.color;
+        dot.style.color = phase.color;
+        dot.style.background = isActive ? phase.color + '22' : '#070710';
+        dot.textContent = phase.icon;
+        left.appendChild(dot);
+
+        if (index < phases.length - 1) {
+          const connector = document.createElement('div');
+          connector.className = 'connector';
+          connector.style.background = `linear-gradient(${phase.color}, ${phases[index + 1].color})`;
+          left.appendChild(connector);
+        }
+
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.style.borderColor = isActive ? phase.color + '60' : '#ffffff12';
+        card.style.background = isActive ? `linear-gradient(135deg, ${phase.color}08, transparent)` : 'transparent';
+
+        card.addEventListener('click', () => {
+          activeId = isActive ? null : phase.id;
+          renderTimeline();
+        });
+
+        const main = document.createElement('div');
+
+        const meta = document.createElement('div');
+        meta.className = 'meta';
+        meta.style.color = phase.color;
+        meta.textContent = `${phase.title} · ${phase.duration}`;
+
+        const title = document.createElement('div');
+        title.className = 'title';
+        title.textContent = phase.subtitle;
+
+        main.append(meta, title);
+
+        const right = document.createElement('div');
+        right.style.display = 'flex';
+        right.style.alignItems = 'center';
+        right.style.gap = '12px';
+
+        const chips = document.createElement('div');
+        chips.className = 'chips';
+        phase.topics.forEach((t) => {
+          const chip = document.createElement('span');
+          chip.className = 'chip';
+          chip.style.color = phase.color;
+          chip.style.borderColor = phase.color + '40';
+          chip.textContent = t.name;
+          chips.appendChild(chip);
+        });
+
+        const arrow = document.createElement('div');
+        arrow.className = 'arrow';
+        arrow.style.color = phase.color;
+        arrow.style.transform = isActive ? 'rotate(180deg)' : 'rotate(0deg)';
+        arrow.textContent = '▾';
+
+        right.append(chips, arrow);
+        card.append(main, right);
+
+        row.append(left, card);
+        rowWrap.appendChild(row);
+
+        if (isActive) {
+          const detail = document.createElement('div');
+          detail.className = 'detail';
+          detail.style.border = `1px solid ${phase.color}30`;
+          detail.style.background = `linear-gradient(135deg, ${phase.color}06, #0a0a1a)`;
+
+          const grid = document.createElement('div');
+          grid.className = 'grid';
+
+          phase.topics.forEach((topic) => {
+            const block = document.createElement('div');
+
+            const tt = document.createElement('div');
+            tt.className = 'topic-title';
+            tt.style.color = phase.color;
+            tt.textContent = topic.name;
+
+            block.appendChild(tt);
+
+            topic.items.forEach((item) => {
+              const li = document.createElement('p');
+              li.className = 'topic-item';
+              li.innerHTML = `<span style="color:${phase.color}">›</span> ${item}`;
+              block.appendChild(li);
+            });
+
+            grid.appendChild(block);
+          });
+
+          const ms = document.createElement('div');
+          ms.className = 'milestone';
+          ms.style.background = phase.color + '15';
+          ms.style.border = `1px solid ${phase.color}40`;
+          ms.innerHTML = `🏁 <strong style="font-size:10px;letter-spacing:2px;color:${phase.color};text-transform:uppercase;">Milestone</strong><br>${phase.milestone}`;
+
+          detail.append(grid, ms);
+          rowWrap.appendChild(detail);
+        }
+
+        timeline.appendChild(rowWrap);
+      });
+    }
+
+    function renderPanel(el, title, titleColor, rows) {
+      el.innerHTML = `<h3 style="color:${titleColor}">${title}</h3>`;
+      rows.forEach(([k, v]) => {
+        const r = document.createElement('div');
+        r.className = 'kv';
+        r.innerHTML = `<span class="k">${k}</span><span class="v">${v}</span>`;
+        el.appendChild(r);
+      });
+    }
+
+    function renderResources() {
+      const el = document.getElementById('resources');
+      el.innerHTML = '<h3 style="color:#9B5DE5">KEY RESOURCES</h3>';
+      resourceLinks.forEach((r) => {
+        const row = document.createElement('div');
+        row.className = 'res';
+        row.innerHTML = `<span class="badge">${r.cat}</span><span style="font-size:12px;color:#aaa;">${r.name}</span>`;
+        el.appendChild(row);
+      });
+    }
+
+    renderTimeline();
+    renderPanel(document.getElementById('stack'), 'TECH STACK', '#00FFB2', stackData);
+    renderPanel(document.getElementById('compute'), 'COMPUTE PLAN', '#F72585', computeData);
+    renderResources();
+  </script>
+</body>
+</html>
