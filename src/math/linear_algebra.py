@@ -50,3 +50,9 @@ def matrix_multiply(a: list[list[int]], b: list[list[int]]) -> list[list[int]]:
     
     # 3. Return the result instead of just printing it
     return result
+
+vector1 = np.array([10, 2])
+vector2 = np.array([13, 17])
+
+dot_product = np.dot(vector1, vector2)
+print(dot_product)
