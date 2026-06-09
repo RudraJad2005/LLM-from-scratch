@@ -29,3 +29,7 @@ def forward_pass(inputs: list, weights1: list, weights2: list, weights3: list) -
 
 forward = forward_pass([2, 3], [1, 1], [-1, 1], [2, -1])
 print(forward)
+
+
+
+        
