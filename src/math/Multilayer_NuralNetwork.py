@@ -28,6 +28,7 @@ class MultiLayerNeuralNetwork:
 
     def predict_with_network(self, input_data):
         
+        
         node_0_0_input = (input_data * self.weights1).sum()
         node_0_0_output = relu(node_0_0_input)
 

@@ -19,3 +19,4 @@ def forward_pass(inputs: np.ndarray, weights1: np.ndarray, weights2: np.ndarray,
 
 forward = forward_pass([2, 3], [1, 1], [-1, 1], [2, -1])
 print(forward)
+
