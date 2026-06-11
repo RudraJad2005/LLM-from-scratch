@@ -10,3 +10,14 @@ for i in range(len(vector1)):
 
     result[i] = vector1[i] + vector2[i]
     print(result)
+
+print("#############")
+
+vector1 = [1, 2, 3]
+
+result = [0 for _ in range(len(vector1))]
+
+for i in range(len(vector1)):
+
+    result[i] = vector1[i] * 2
+    print(result)
