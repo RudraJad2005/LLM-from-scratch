@@ -19,5 +19,22 @@ for i in range(len(matrix1)):
 for row in result:
     print(row)
 
-    
+
+
+## Transpose of a matrix
+
+matrix1 = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
+
+result = [[0 for _ in range(len(matrix1))] for _ in range(len(matrix1[0]))]
+
+for i in range(len(matrix1)):
+    for j in range(len(matrix1[0])):
+        result[j][i] = matrix1[i][j]
+
+for row in result:
+    print(row)
 
