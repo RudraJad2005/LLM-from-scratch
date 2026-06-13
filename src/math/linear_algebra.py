@@ -19,3 +19,23 @@ vector1 = Vector(1, 2)
 vector2 = Vector(3, 4)
 result_add = vector1.add(vector2)
 print(f"Vector addition result: ({result_add.x}, {result_add.y})")
+
+
+class Matrix:
+    def __init__(self, data):
+        self.data = data
+        self.rows = len(data)
+        self.cols = len(data[0]) if data else 0
+
+    def transpose(self):
+        transposed_data = [[self.data[i][j] for i in range(self.rows)] for j in range(self.cols)]
+        return Matrix(transposed_data)
+
+matrix = Matrix([[1, 2, 3], [4, 5, 6]])
+transposed_matrix = matrix.transpose()
+print("Original Matrix:")
+for row in matrix.data:
+    print(row)
+print("Transposed Matrix:")
+for row in transposed_matrix.data:
+    print(row)
