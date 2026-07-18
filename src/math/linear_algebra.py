@@ -30,6 +30,19 @@ class Matrix:
     def transpose(self):
         transposed_data = [[self.data[i][j] for i in range(self.rows)] for j in range(self.cols)]
         return Matrix(transposed_data)
+    
+    def multiply(self, other):
+        if self.cols != other.rows:
+            raise ValueError("Incompatible dimensions for matrix multiplication.")
+        
+        result_data = [[0 for _ in range(other.cols)] for _ in range(self.rows)]
+        
+        for i in range(self.rows):
+            for j in range(other.cols):
+                for k in range(self.cols):
+                    result_data[i][j] += self.data[i][k] * other.data[k][j]
+        
+        return Matrix(result_data)
 
 matrix = Matrix([[1, 2, 3], [4, 5, 6]])
 transposed_matrix = matrix.transpose()
@@ -39,3 +52,4 @@ for row in matrix.data:
 print("Transposed Matrix:")
 for row in transposed_matrix.data:
     print(row)
+

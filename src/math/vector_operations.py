@@ -1,3 +1,5 @@
+import numpy as np
+
 
 print("Vector addition result:")
 vector1 = [1, 2, 3]
@@ -26,7 +28,6 @@ for i in range(len(vector1)):
 print("Vector Subtraction")
 
 
-
 vector1 = [2, 3, 4]
 
 vector2 = [5, 6, 7]
@@ -51,3 +52,6 @@ for i in range(len(vector1)):
 
     result = result + vector1[i] * vector2[i]
     print(result)
+
+
+
