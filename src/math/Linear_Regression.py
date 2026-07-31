@@ -1,9 +1,38 @@
 import numpy as np 
 
-def normal_equation(X, y):
+np.random.seed(42)
+X = 2 * np.random.rand(100, 1)           # 100 samples, 1 feature, range [0, 2]
+y = 4 + 3 * X + np.random.randn(100, 1)
 
-    return np.linalg.inv(X.T @ X) @ X.T @ y
 
-normal_equation(np.array([[1, 1], [1, 2], [2, 2], [2, 3]]), np.array([6, 8, 9, 11]))
 
-print("Normal Equation Result:", normal_equation)
+w = np.random.randn(1, 1) 
+b = 0.0                    
+lr = 0.1                    # learning rate (alpha)
+epochs = 100                # number of passes through all data
+n = len(X)                  # number of samples
+losses = []  
+
+
+for epoch in range(epochs):
+ 
+    y_pred = X @ w + b                   
+
+    loss = np.mean((y - y_pred) ** 2)  
+    losses.append(loss)
+
+    error = y - y_pred                    
+    dw = (-2 / n) * (X.T @ error)     
+    db = (-2 / n) * np.sum(error)       
+
+
+    w = w - lr * dw                      
+    b = b - lr * db                   
+
+    if epoch % 20 == 0:
+        print(f"Epoch{epoch:3d} | Loss:{loss:.4f} | w:{w[0,0]:.4f} | b:{b:.4f}")
+
+
+
+
+
