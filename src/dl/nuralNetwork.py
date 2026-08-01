@@ -114,6 +114,6 @@ plt.xlabel("Epoch")
 plt.ylabel("Binary Cross-Entropy Loss")
 plt.grid(True, alpha=0.3)
 plt.tight_layout()
-
 plt.savefig("xor_loss_curve.png", dpi=100)
 plt.show()
+
