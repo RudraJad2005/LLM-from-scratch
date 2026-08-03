@@ -1,23 +1,17 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# ============================================================
-#  ACTIVATION FUNCTIONS AND THEIR DERIVATIVES
-# ============================================================
+
 def sigmoid(z):
-    """Squashes any value into (0, 1) — used for output layer."""
     return 1 / (1 + np.exp(-z))
 
 def sigmoid_derivative(a):
-    """Derivative of sigmoid. Note: takes the ACTIVATION (a), not z."""
     return a * (1 - a)                # Beautiful closed-form!
 
 def relu(z):
-    """If positive → pass through. If negative → kill to 0."""
     return np.maximum(0, z)
 
 def relu_derivative(z):
-    """1 if z > 0, else 0. That's it. That's the derivative."""
     return (z > 0).astype(float)
 
 # ============================================================
@@ -101,7 +95,7 @@ print(f"Input [1,0] →{a2[2,0]:.4f}  (expected 1)")
 print(f"Input [1,1] →{a2[3,0]:.4f}  (expected 0)")
 
 rounded = np.round(a2)
-accuracy = np.mean(rounded == y) * 100
+accuracy = np.mean(rounded == y) * 100 
 print(f"\nAccuracy:{accuracy:.0f}%")
 
 
